@@ -7,40 +7,10 @@ import (
 	"strconv"
 )
 
-const form = `
-<html>
-<body>
-<form method="POST" action="/invite">
-<label for="email">Email</label>
-<input type="email" name="email" required></input>
-<br>
-<label for="ok">Do you identify as a woman or gender minority?</label>
-<input type="radio" name="ok" value="true" required>Yes</input>
-<input type="radio" name="ok" value="false" required>No</input>
-<br>
-<input type="submit" value="submit"></input>
-</form>
-</body>
-</html>
-`
-
 func main() {
 	http.HandleFunc("/invite", invite)
-	http.HandleFunc("/", index)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "Not found", http.StatusNotFound)
-		return
-	}
-
-	_, err := fmt.Fprint(w, form)
-	if err != nil {
-		log.Println(err)
-	}
 }
 
 func invite(w http.ResponseWriter, r *http.Request) {

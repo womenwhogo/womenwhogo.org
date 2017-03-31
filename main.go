@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -37,7 +36,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !ok {
-		fmt.Fprintf(w, "This slack is only for women and gender minorities.")
+		http.Redirect(w, r, "http://www.womenwhogo.org/failure.html", http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -47,7 +46,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprint(w, "Success! Check your email for invite.")
+	http.Redirect(w, r, "http://www.womenwhogo.org/success.html", http.StatusTemporaryRedirect)
 }
 
 func badRequest(w http.ResponseWriter, err error) {

@@ -36,7 +36,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !ok {
-		http.Redirect(w, r, "http://www.womenwhogo.org/failure.html", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "http://www.womenwhogo.org/failure.html", http.StatusFound)
 		return
 	}
 
@@ -46,7 +46,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "http://www.womenwhogo.org/success.html", http.StatusTemporaryRedirect)
+	http.Redirect(w, r, "http://www.womenwhogo.org/success.html", http.StatusFound)
 }
 
 func badRequest(w http.ResponseWriter, err error) {

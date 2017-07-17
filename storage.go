@@ -46,10 +46,10 @@ func handleStaticRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rc, err := object.NewReader(r.Context())
+	defer rc.Close()
 	if err != nil {
 		http.Error(w, "404 Not Found.", http.StatusNotFound) // we need a fancy 404 here
 		return
 	}
 	io.Copy(w, rc)
-	defer rc.Close()
 }

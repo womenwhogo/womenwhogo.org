@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	client *storage.Client
-
-	bucket *storage.BucketHandle
+	client     *storage.Client
+	bucket     *storage.BucketHandle
+	bucketName string
 )
 
 func init() {
@@ -21,12 +21,17 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	bucketName = os.Getenv("SITE_BUCKET")
+	if bucketName == "" {
+		panic("No SITE_BUCKET given")
+	}
 }
 
 func handleStaticRequest(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Served-With-Love-By", "Gophers")
 
-	bucket := client.Bucket(os.Getenv("SITE_BUCKET"))
+	bucket := client.Bucket(bucketName)
 
 	path := r.URL.Path[1:] // removing the leading / here
 

@@ -3,32 +3,9 @@ package main
 import (
 	"io"
 	"net/http"
-	"os"
-
-	"cloud.google.com/go/storage"
-	"golang.org/x/net/context"
 )
 
-var (
-	client     *storage.Client
-	bucket     *storage.BucketHandle
-	bucketName string
-)
-
-func init() {
-	var err error
-	client, err = storage.NewClient(context.Background())
-	if err != nil {
-		panic(err)
-	}
-
-	bucketName = os.Getenv("SITE_BUCKET")
-	if bucketName == "" {
-		panic("No SITE_BUCKET given")
-	}
-}
-
-func handleStaticRequest(w http.ResponseWriter, r *http.Request) {
+func handleIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Served-With-Love-By", "Gophers")
 
 	bucket := client.Bucket(bucketName)
@@ -37,10 +14,6 @@ func handleStaticRequest(w http.ResponseWriter, r *http.Request) {
 
 	if path == "" {
 		path = "index.html"
-	}
-
-	if path[:7] == "assets/" {
-		w.Header().Set("Cache-Control", "max-age=86400")
 	}
 
 	object := bucket.Object(path)
@@ -57,4 +30,9 @@ func handleStaticRequest(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rc.Close()
 	io.Copy(w, rc)
+}
+
+func handleAssets(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "max-age=86400")
+	http.FileServer(http.Dir("./womenwhogo.org/")).ServeHTTP(w, r)
 }

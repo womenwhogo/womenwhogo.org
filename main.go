@@ -1,37 +1,15 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
-
-	"cloud.google.com/go/storage"
-)
-
-var (
-	client     *storage.Client
-	bucket     *storage.BucketHandle
-	bucketName string
 )
 
 func main() {
-	// setup the storage client
-	var err error
-	client, err = storage.NewClient(context.Background())
-	if err != nil {
-		panic(err)
-	}
-
-	bucketName = os.Getenv("SITE_BUCKET")
-	if bucketName == "" {
-		panic("No SITE_BUCKET given")
-	}
-
 	http.HandleFunc("/invite", invite)
 	http.HandleFunc("/assets/", handleAssets)
-	http.HandleFunc("/", handleIndex)
+	http.HandleFunc("/", handleStatic)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 

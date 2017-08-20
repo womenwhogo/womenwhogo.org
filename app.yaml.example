@@ -2,4 +2,3 @@ runtime: go
 env: flex
 env_variables:
   SLACK_API_TOKEN: 'replace me'
-  SITE_BUCKET: 'wwg-test-site.appspot.com'

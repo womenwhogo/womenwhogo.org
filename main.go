@@ -8,7 +8,8 @@ import (
 
 func main() {
 	http.HandleFunc("/invite", invite)
-
+	http.HandleFunc("/assets/", handleAssets)
+	http.HandleFunc("/", handleStatic)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 

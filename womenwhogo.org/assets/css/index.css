@@ -1,0 +1,53 @@
+.header {
+	margin-top: 2%;
+}
+
+.main-img {
+	max-width: 100%;
+}
+
+.container {
+	max-width: 700px;
+}
+
+.links {
+	padding-top: 10px;
+}
+
+.row {
+	padding-bottom: 10px;
+}
+
+.link {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.link img {
+	max-width: 100%;
+	max-height: 60px;
+}
+
+.chapters .lead, .links .lead {
+	padding-top: 20px;
+}
+
+.chapter .lead {
+	margin-left: 15px;
+}
+
+.email-us {
+	padding-left: 20px;
+}
+
+.header {
+	padding-top: 30px;
+}
+
+.header h1 {
+	margin-top:0;
+}
+
+.alert {
+    text-align: center;
+}

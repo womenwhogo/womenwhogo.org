@@ -1,4 +1,8 @@
 runtime: go
-env: flex
+api_version: go1.8
 env_variables:
   SLACK_API_TOKEN: 'replace me'
+
+handlers:
+- url: /.*
+  script: _go_app

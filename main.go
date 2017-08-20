@@ -4,13 +4,16 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
+	"google.golang.org/appengine"
 )
 
 func main() {
 	http.HandleFunc("/invite", invite)
 	http.HandleFunc("/assets/", handleAssets)
 	http.HandleFunc("/", handleStatic)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	//log.Fatal(http.ListenAndServe(":8080", nil))
+	appengine.Main()
 }
 
 func invite(w http.ResponseWriter, r *http.Request) {

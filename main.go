@@ -46,7 +46,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 
 	err = inviteUser(em)
 	if err != nil {
-		badRequest(w, r, err)
+		interalServerError(w, r, err)
 		return
 	}
 
@@ -57,4 +57,10 @@ func badRequest(w http.ResponseWriter, r *http.Request, err error) {
 	ctx := appengine.NewContext(r)
 	log.Debugf(ctx, "Error bad request: %v", err)
 	http.Error(w, "Bad request.", http.StatusBadRequest)
+}
+
+func interalServerError(w http.ResponseWriter, r *http.Request, err error) {
+	ctx := appengine.NewContext(r)
+	log.Debugf(ctx, "Internal server error: %v", err)
+	http.Error(w, "Internal server error.", http.StatusInternalServerError)
 }

@@ -6,13 +6,16 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/urlfetch"
 )
 
 const inviteURL = "https://slack.com/api/users.admin.invite"
 
 var token = os.Getenv("SLACK_API_TOKEN")
 
-func inviteUser(em string) error {
+func inviteUser(r *http.Request, em string) error {
 	values := make(url.Values, 2)
 	values.Add("token", token)
 	values.Add("email", em)
@@ -22,7 +25,10 @@ func inviteUser(em string) error {
 	s := values.Encode()
 	u := inviteURL + "?" + s
 
-	resp, err := http.Get(u)
+	ctx := appengine.NewContext(r)
+	client := urlfetch.Client(ctx)
+
+	resp, err := client.Get(u)
 	if err != nil {
 		return err
 	}

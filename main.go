@@ -44,7 +44,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = inviteUser(em)
+	err = inviteUser(r, em)
 	if err != nil {
 		interalServerError(w, r, err)
 		return

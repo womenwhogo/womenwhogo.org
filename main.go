@@ -1,11 +1,11 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 )
 
 func main() {
@@ -24,7 +24,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
-		badRequest(w, err)
+		badRequest(w, r, err)
 		return
 	}
 
@@ -35,7 +35,7 @@ func invite(w http.ResponseWriter, r *http.Request) {
 	// or a gender minority.
 	ok, err := strconv.ParseBool(okstr)
 	if err != nil {
-		badRequest(w, err)
+		badRequest(w, r, err)
 		return
 	}
 
@@ -46,14 +46,15 @@ func invite(w http.ResponseWriter, r *http.Request) {
 
 	err = inviteUser(em)
 	if err != nil {
-		badRequest(w, err)
+		badRequest(w, r, err)
 		return
 	}
 
 	http.Redirect(w, r, "http://www.womenwhogo.org/success.html", http.StatusFound)
 }
 
-func badRequest(w http.ResponseWriter, err error) {
-	log.Println(err)
+func badRequest(w http.ResponseWriter, r *http.Request, err error) {
+	ctx := appengine.NewContext(r)
+	log.Debugf(ctx, "Error bad request: %v", err)
 	http.Error(w, "Bad request.", http.StatusBadRequest)
 }

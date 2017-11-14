@@ -13,5 +13,5 @@ deploy:
   provider: gae
   keyfile: appengine.json
   project: womenwhogo-site
-  cleanup: false
+  skip_cleanup: true
   on: master

@@ -34,11 +34,30 @@
     <hr>
     <br>
 <div class="container">
-<div class="col-sm-8 col-sm-offset-2">
+<div class="col-sm-12">
   <table class="table">
   	<tr>
   		<th>Global Organization</th>
-  		<td>TBA</td>
+  		<td>
+  			<table class="table">
+  				<tr>
+  					<th>CEO</th>
+  					<td><a href="https://twitter.com/MaartjeME">Maartje Eyskens</a></td>
+  				</tr>
+  				<tr>
+  					<th>CFO</th>
+  					<td><a href="https://twitter.com/maria_fibonacci">Verónica López</a></td>
+  				</tr>
+  				<tr>
+  					<th>Head of New Chapters</th>
+  					<td><a href="https://twitter.com/danicat83">Daniela Petruzalek</a></td>
+  				</tr>
+  				<tr>
+  					<th>Head of Support</th>
+  					<td><a href="https://twitter.com/carolynvs">Carolyn Van Slyck</a></td>
+  				</tr>
+  			</table>
+  		</td>
   	</tr>
   	<tr>
   		<th>Gophercon Scholarships</th>

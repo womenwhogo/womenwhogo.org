@@ -1,6 +1,6 @@
 language: go
 after_success:
-- if [ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_eca6ec4b024e_key
+- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_eca6ec4b024e_key
   -iv $encrypted_eca6ec4b024e_iv -in appengine.json.enc -out appengine.json -d; sed
   -i 's/$TOKEN/'$SLACK_TOKEN'/g' app.yaml; fi
 deploy:

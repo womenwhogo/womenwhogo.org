@@ -1,9 +1,0 @@
-runtime: go
-api_version: go1.9
-env_variables:
-  SLACK_API_TOKEN: '$TOKEN'
-
-handlers:
-- url: /.*
-  script: _go_app
-  secure: always

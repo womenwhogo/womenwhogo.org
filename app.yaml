@@ -1,5 +1,5 @@
-runtime: go
-api_version: go1.11
+runtime: go112 
+
 env_variables:
   SLACK_API_TOKEN: '$TOKEN'
 

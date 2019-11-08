@@ -2,8 +2,3 @@ runtime: go112
 
 env_variables:
   SLACK_API_TOKEN: '$TOKEN'
-
-handlers:
-- url: /.*
-  script: _go_app
-  secure: always

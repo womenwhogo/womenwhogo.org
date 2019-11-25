@@ -1,5 +1,5 @@
 language: go
-go: '1.11.x'
+go: '1.13.x'
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_eca6ec4b024e_key
   -iv $encrypted_eca6ec4b024e_iv -in appengine.json.enc -out appengine.json -d; sed

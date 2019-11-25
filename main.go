@@ -1,19 +1,26 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 	"strconv"
-
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/log"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
 	http.HandleFunc("/invite", invite)
 	http.HandleFunc("/assets/", handleAssets)
 	http.HandleFunc("/", handleStatic)
-	//log.Fatal(http.ListenAndServe(":8080", nil))
-	appengine.Main()
+
+	log.Printf("Listening on port %s", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func invite(w http.ResponseWriter, r *http.Request) {
@@ -54,13 +61,11 @@ func invite(w http.ResponseWriter, r *http.Request) {
 }
 
 func badRequest(w http.ResponseWriter, r *http.Request, err error) {
-	ctx := appengine.NewContext(r)
-	log.Debugf(ctx, "Error bad request: %v", err)
+	log.Printf("Error bad request: %v", err)
 	http.Error(w, "Bad request.", http.StatusBadRequest)
 }
 
 func interalServerError(w http.ResponseWriter, r *http.Request, err error) {
-	ctx := appengine.NewContext(r)
-	log.Debugf(ctx, "Internal server error: %v", err)
+	log.Printf("Internal server error: %v", err)
 	http.Error(w, "Internal server error.", http.StatusInternalServerError)
 }

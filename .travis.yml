@@ -1,15 +1,17 @@
 language: go
-go: '1.13.x'
+go: "1.13.x"
 after_success:
-- if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_eca6ec4b024e_key
-  -iv $encrypted_eca6ec4b024e_iv -in appengine.json.enc -out appengine.json -d; sed
-  -i 's/$TOKEN/'$SLACK_TOKEN'/g' app.yaml; fi
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_eca6ec4b024e_key
+    -iv $encrypted_eca6ec4b024e_iv -in appengine.json.enc -out appengine.json -d; sed
+    -i 's/$TOKEN/'$SLACK_TOKEN'/g' app.yaml; fi
+  - gcloud app domain-mappings delete womenwhogo.org
+  - gcloud app domain-mappings delete www.womenwhogo.org
 deploy:
   provider: gae
   keyfile: appengine.json
-  project: womenwhogo-site
+  project: wwg-site
   skip_cleanup: true
-  on: master
+  on: rm-domain
 notifications:
   slack:
     secure: m0mGDzIZopJIOoUi3LXaOAG5UVNAPiKq7O1YUpvQNAZYpQ96DVe0+fBtFzxm78T8JZ2Gu/EIFEF6YXxyqKYdLHVmjMh34L1wfijaeBJj17T6DqAkvtt+nQr7bxLxEsw+8AZyHTBpOYnlq7n18cVr3HP6tQ4BWKCI3IGc9REz2nXLLb6W/7IVsKTqBJlQHZAlvyXexyRvHXrQ3R/HBIPJMyfok1zhZIvlowFkRhiaIIJeiwMKihG9gxD4zhrwfTkiBNMtmDocNNpZkXCcseAf068tbCww/VJbtY2HOeFZxURLMmSyXSJn4uTnQzR50tccibLTeIHkJU6+qANl6OttdXVEnmKN6/ysnJx8BZ5tSe5D2B90mmq6Evu/Sc1ZOMRaaBCrdxqaUJ1zRPtnDtunlFzAYv1wrvjoOhWJnSMryrQJ1poOCuh0cXlpR0jd4FWWRSUMQjaq+jqsuIHeTwfEN4Kj+uq6ltNM7L9EhLe7AfU7jTxfZ8F7cVwtv9+zgUKTWn7mNJY/f7Zqakekus8K3OAjnhn5BV6a9OqPE2OkthW0IIRXoujW0cnnbwFaeHG1sJISft5eAD0V2ZrX2O4EhQIQxySg+VQ0L5G+SeIHOJRToMeF9humzu4R16ITophGS5nNwXNoP21Cd6WFyadRLwjw3TCGHDmJtvMy2euV3TA=
